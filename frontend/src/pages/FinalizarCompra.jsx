@@ -11,8 +11,11 @@ const FinalizarCompra = () => {
   useEffect(() => {
     const verificarLogin = async () => {
       try {
+        const token = localStorage.getItem('token');
         const res = await fetch(`${import.meta.env.VITE_API_URL}/perfil`, {
-          credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!res.ok) {

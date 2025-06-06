@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
 
 const ProtectedRoute = ({ element }) => {
-  const auth = getAuth();
-  const user = auth.currentUser; // Verifica se o usuário está autenticado
-  
-  if (!user) {
-    return <Navigate to="/login" replace />; // Redireciona para login se não estiver autenticado
-  }
+  const [authorized, setAuthorized] = useState(null);
 
-  return element; // Se o usuário estiver autenticado, renderiza o componente protegido
+  useEffect(() => {
+    const verify = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setAuthorized(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/perfil`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setAuthorized(res.ok);
+      } catch {
+        setAuthorized(false);
+      }
+    };
+
+    verify();
+  }, []);
+
+  if (authorized === null) return null;
+
+  return authorized ? element : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;
