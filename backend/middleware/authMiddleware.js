@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
+import { isTokenBlacklisted } from '../utils/tokenBlacklist.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'chavepadrao';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -9,6 +13,9 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: 'Token não fornecido.' });
 
   const [, token] = authHeader.split(' ');
+
+  if (isTokenBlacklisted(token))
+    return res.status(401).json({ message: 'Token inválido.' });
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);

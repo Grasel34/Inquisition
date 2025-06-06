@@ -4,6 +4,7 @@ import {
   login,
   getPerfil,
   updatePerfil,
+  logout,
 } from '../controllers/authController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
+router.post('/logout', authMiddleware, logout);
 router.get('/perfil', authMiddleware, getPerfil);
 router.put('/perfil', authMiddleware, updatePerfil);
 

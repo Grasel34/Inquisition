@@ -1,8 +1,12 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { blacklistToken } from '../utils/tokenBlacklist.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'chavepadrao';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 export const register = async (req, res) => {
   const { email, senha } = req.body;
@@ -67,4 +71,14 @@ export const updatePerfil = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Erro ao atualizar perfil.', error });
   }
+};
+
+export const logout = (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader)
+    return res.status(400).json({ message: 'Token não fornecido.' });
+
+  const [, token] = authHeader.split(' ');
+  blacklistToken(token);
+  res.json({ message: 'Logout realizado com sucesso.' });
 };
