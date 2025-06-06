@@ -13,9 +13,9 @@ if (!process.env.JWT_SECRET) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS corrigido para Vercel
+// CORS configurado via variável de ambiente
 app.use(cors({
-  origin: 'https://vortex-project.vercel.app', // substitua pela sua URL real
+  origin: process.env.CORS_ORIGIN,
   credentials: true
 }));
 
