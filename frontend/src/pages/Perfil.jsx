@@ -14,8 +14,11 @@ const Perfil = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        const token = localStorage.getItem('token');
         const res = await fetch(`${import.meta.env.VITE_API_URL}/perfil`, {
-          credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (res.ok) {
@@ -44,13 +47,14 @@ const Perfil = () => {
     }
 
     try {
+      const token = localStorage.getItem('token');
       const res = await fetch(`${import.meta.env.VITE_API_URL}/perfil`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ nome, telefone }),
-        credentials: 'include',
       });
 
       if (res.ok) {

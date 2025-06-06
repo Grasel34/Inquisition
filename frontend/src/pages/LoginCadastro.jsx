@@ -29,11 +29,12 @@ const LoginCadastro = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({ email, senha }),
       });
 
       if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem('token', token);
         navigate('/perfil');
       } else {
         const { message } = await response.json();
