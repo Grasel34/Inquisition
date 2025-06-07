@@ -1,12 +1,13 @@
 import React from 'react';
-import { useComanda } from './ComandaContext'; // ajuste conforme sua pasta
+import { useComanda } from './ComandaContext';
+import { ComandaItem } from '../types/ComandaItem';
 import { useNavigate } from 'react-router-dom';
 
 const Comanda = () => {
   const { itensComanda, limparComanda } = useComanda();
   const navigate = useNavigate();
 
-  const total = itensComanda.reduce((acc, item) => acc + item.price, 0);
+  const total = itensComanda.reduce((acc: number, item: ComandaItem) => acc + item.price, 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 text-white px-5 py-6 flex flex-col">
@@ -29,7 +30,7 @@ const Comanda = () => {
         {itensComanda.length === 0 ? (
           <p className="text-center text-purple-300 italic">Sua comanda está vazia.</p>
         ) : (
-          itensComanda.map((item, index) => (
+          itensComanda.map((item: ComandaItem, index: number) => (
             <div
               key={index}
               className="flex justify-between items-center bg-white/10 p-4 rounded-lg border border-purple-600/40 shadow-sm"

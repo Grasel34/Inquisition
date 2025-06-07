@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ComandaItem } from '../types/ComandaItem';
 
 // Produtos
 import AguaImg from '../assets/Cardapio/Bebidas/Água.svg';
@@ -26,30 +27,30 @@ const categories = [
   { name: "Whiskys", icon: WhiskysIcon }
 ];
 
-const products = [
-  { name: "Caipirinha", image: CaipiraImg, price: 119, category: "Drinks" },
-  { name: "Jack Daniel", image: JackDanielImg, price: 119, category: "Whiskys" },
-  { name: "Kit Natasha", image: KitNatashaImg, price: 119, category: "Kit's" },
-  { name: "Kit Absolute", image: KitAbsolutImg, price: 119, category: "Kit's" },
-  { name: "Soda Italiana", image: SodaImg, price: 119, category: "S/ Álcool" },
-  { name: "Água S/Gás", image: AguaImg, price: 119, category: "S/ Álcool" },
+const products: ComandaItem[] = [
+  { name: 'Caipirinha', image: CaipiraImg, price: 119, category: 'Drinks' },
+  { name: 'Jack Daniel', image: JackDanielImg, price: 119, category: 'Whiskys' },
+  { name: 'Kit Natasha', image: KitNatashaImg, price: 119, category: "Kit's" },
+  { name: 'Kit Absolute', image: KitAbsolutImg, price: 119, category: "Kit's" },
+  { name: 'Soda Italiana', image: SodaImg, price: 119, category: 'S/ Álcool' },
+  { name: 'Água S/Gás', image: AguaImg, price: 119, category: 'S/ Álcool' },
 ];
 
 const Cardapio = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
   const { adicionarItem } = useComanda();
 
-  const formatPrice = (value) =>
+  const formatPrice = (value: number) =>
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(value);
 
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     setToastMessage(message);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2500);

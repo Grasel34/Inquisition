@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useComanda } from './ComandaContext';
+import { ComandaItem } from '../types/ComandaItem';
 import { useNavigate } from 'react-router-dom';
 
 const FinalizarCompra = () => {
   const { itensComanda, limparComanda } = useComanda();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Verifica se o usuário está autenticado
   useEffect(() => {
@@ -32,7 +33,7 @@ const FinalizarCompra = () => {
     verificarLogin();
   }, [navigate]);
 
-  const total = itensComanda.reduce((acc, item) => acc + item.price, 0);
+  const total = itensComanda.reduce((acc: number, item: ComandaItem) => acc + item.price, 0);
 
   const finalizarPedido = () => {
     alert('✅ Pedido finalizado com sucesso!');
@@ -58,7 +59,7 @@ const FinalizarCompra = () => {
         {itensComanda.length === 0 ? (
           <p className="text-center text-purple-300 italic">Sua comanda está vazia.</p>
         ) : (
-          itensComanda.map((item, index) => (
+          itensComanda.map((item: ComandaItem, index: number) => (
             <div
               key={index}
               className="flex justify-between items-center bg-white/10 border border-purple-600/40 rounded-lg px-4 py-3"
