@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Escanear = () => {
+const Escanear: FC = () => {
   return (
     <div>
       <h1>📷 Escanear QR Code</h1>

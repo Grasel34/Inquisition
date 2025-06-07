@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import ComandaIcon from '../assets/Comanda.svg'; 
 import FilaIcon from '../assets/Fila Digital.svg';
@@ -10,7 +11,14 @@ import VortexLogo from '../assets/VortexLetra.png';
 const ICON_SIZE = 56; // px
 
 // Configurações individuais
-const navConfig = {
+interface NavItemConfig {
+  icon: string;
+  normal: string;
+  hover: string;
+  active: string;
+}
+
+const navConfig: Record<string, NavItemConfig> = {
   "/": {
     icon: CardapioIcon,
     normal: "scale-100",
@@ -43,7 +51,7 @@ const navConfig = {
   }
 };
 
-const ModernLayout = () => {
+const ModernLayout: FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-purple-800 to-purple-950 text-white">
       
@@ -69,7 +77,11 @@ const ModernLayout = () => {
   );
 };
 
-const NavItem = ({ to, icon, normal, hover, active }) => (
+interface NavItemProps extends NavItemConfig {
+  to: string;
+}
+
+const NavItem: FC<NavItemProps> = ({ to, icon, normal, hover, active }) => (
   <NavLink
     to={to}
     className={({ isActive }) => {

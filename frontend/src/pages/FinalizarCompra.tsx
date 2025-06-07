@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useComanda } from './ComandaContext';
+import { FC, useEffect, useState } from 'react';
+import { useComanda, Item } from './ComandaContext';
 import { useNavigate } from 'react-router-dom';
 
-const FinalizarCompra = () => {
+const FinalizarCompra: FC = () => {
   const { itensComanda, limparComanda } = useComanda();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Verifica se o usuário está autenticado
   useEffect(() => {
@@ -32,7 +32,7 @@ const FinalizarCompra = () => {
     verificarLogin();
   }, [navigate]);
 
-  const total = itensComanda.reduce((acc, item) => acc + item.price, 0);
+  const total = itensComanda.reduce((acc: number, item: Item) => acc + item.price, 0);
 
   const finalizarPedido = () => {
     alert('✅ Pedido finalizado com sucesso!');

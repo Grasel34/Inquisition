@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Chat = () => {
+const Chat: FC = () => {
   return (
     <div className="p-8">
       <header className="flex items-center justify-between mb-8">

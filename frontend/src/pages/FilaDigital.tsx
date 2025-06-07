@@ -1,12 +1,19 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const clientes = [
+interface Cliente {
+  nome: string;
+  posicao: number;
+  status: string;
+}
+
+const clientes: Cliente[] = [
   { nome: "Cliente #1", posicao: 1, status: "Aguardando" },
   { nome: "Cliente #2", posicao: 2, status: "Preparando" },
   { nome: "Cliente #3", posicao: 3, status: "Pronto" }
 ];
 
-const FilaDigital = () => {
+const FilaDigital: FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 text-white px-6 py-8">
       

@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ element }) => {
-  const [authorized, setAuthorized] = useState(null);
+interface ProtectedRouteProps {
+  element: ReactElement;
+}
+
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ element }) => {
+  const [authorized, setAuthorized] = useState<boolean | null>(null);
 
   useEffect(() => {
     const verify = async () => {

@@ -1,12 +1,12 @@
-import React from 'react';
-import { useComanda } from './ComandaContext'; // ajuste conforme sua pasta
+import { FC } from 'react';
+import { useComanda, Item } from './ComandaContext';
 import { useNavigate } from 'react-router-dom';
 
-const Comanda = () => {
+const Comanda: FC = () => {
   const { itensComanda, limparComanda } = useComanda();
   const navigate = useNavigate();
 
-  const total = itensComanda.reduce((acc, item) => acc + item.price, 0);
+  const total = itensComanda.reduce((acc: number, item: Item) => acc + item.price, 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 to-purple-950 text-white px-5 py-6 flex flex-col">

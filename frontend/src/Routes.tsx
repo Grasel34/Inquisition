@@ -1,7 +1,8 @@
+import { FC } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ModernLayout from "./components/ModernLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Cardapio from "./pages/Cardapio"; 
+import Cardapio from "./pages/Cardapio";
 import Comanda from "./pages/Comanda";
 import FinalizarCompra from "./pages/FinalizarCompra";
 import FilaDigital from "./pages/FilaDigital";
@@ -11,7 +12,7 @@ import Escanear from "./pages/Escanear";
 import LoginCadastro from "./pages/LoginCadastro";
 import './index.css';
 
-export default function AppRoutes() {
+const AppRoutes: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -32,4 +33,6 @@ export default function AppRoutes() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
+
+export default AppRoutes;

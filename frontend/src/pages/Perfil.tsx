@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const Perfil = () => {
+const Perfil: FC = () => {
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [editando, setEditando] = useState(false);
-  const [mensagem, setMensagem] = useState('');
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [editando, setEditando] = useState<boolean>(false);
+  const [mensagem, setMensagem] = useState<string>('');
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const Perfil = () => {
     fetchUser();
   }, [navigate]);
 
-  const salvarPerfil = async () => {
+  const salvarPerfil = async (): Promise<void> => {
     if (!nome || !telefone) {
       setMensagem('Por favor, preencha todos os campos.');
       return;
@@ -69,7 +69,7 @@ const Perfil = () => {
     }
   };
 
-  const fazerLogout = async () => {
+  const fazerLogout = async (): Promise<void> => {
     // Você pode criar um endpoint /logout no backend
     navigate('/login');
   };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
 // Produtos
 import AguaImg from '../assets/Cardapio/Bebidas/Água.svg';
@@ -18,7 +18,19 @@ import WhiskysIcon from '../assets/Cardapio/Whiskys.svg';
 // Contexto
 import { useComanda } from '../pages/ComandaContext';
 
-const categories = [
+interface Category {
+  name: string;
+  icon: string;
+}
+
+interface Product {
+  name: string;
+  image: string;
+  price: number;
+  category: string;
+}
+
+const categories: Category[] = [
   { name: "Drinks", icon: DrinksIcon },
   { name: "Kit's", icon: KitsIcon },
   { name: "S/ Álcool", icon: SalcoolIcon },
@@ -26,7 +38,7 @@ const categories = [
   { name: "Whiskys", icon: WhiskysIcon }
 ];
 
-const products = [
+const products: Product[] = [
   { name: "Caipirinha", image: CaipiraImg, price: 119, category: "Drinks" },
   { name: "Jack Daniel", image: JackDanielImg, price: 119, category: "Whiskys" },
   { name: "Kit Natasha", image: KitNatashaImg, price: 119, category: "Kit's" },
@@ -35,27 +47,27 @@ const products = [
   { name: "Água S/Gás", image: AguaImg, price: 119, category: "S/ Álcool" },
 ];
 
-const Cardapio = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+const Cardapio: FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [toastVisible, setToastVisible] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
   const { adicionarItem } = useComanda();
 
-  const formatPrice = (value) =>
+  const formatPrice = (value: number): string =>
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(value);
 
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     setToastMessage(message);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2500);
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter((product: Product) => {
     const matchesCategory = !selectedCategory || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
