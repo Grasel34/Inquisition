@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useComanda } from './ComandaContext';
 import { useNavigate } from 'react-router-dom';
+import { PerfilResponse } from '../types/api';
 
 const FinalizarCompra = () => {
   const { itensComanda, limparComanda } = useComanda();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Verifica se o usuário está autenticado
   useEffect(() => {
@@ -20,6 +21,8 @@ const FinalizarCompra = () => {
 
         if (!res.ok) {
           navigate('/login');
+        } else {
+          await res.json() as PerfilResponse;
         }
       } catch (err) {
         console.error('Erro ao verificar autenticação:', err);

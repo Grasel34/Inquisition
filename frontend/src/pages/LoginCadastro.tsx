@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthResponse } from '../types/api';
 
 const LoginCadastro = () => {
-  const [modo, setModo] = useState('login');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [modo, setModo] = useState<string>('login');
+  const [email, setEmail] = useState<string>('');
+  const [senha, setSenha] = useState<string>('');
+  const [erro, setErro] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const alternarModo = () => {
@@ -33,11 +34,11 @@ const LoginCadastro = () => {
       });
 
       if (response.ok) {
-        const { token } = await response.json();
+        const { token } = (await response.json()) as AuthResponse;
         localStorage.setItem('token', token);
         navigate('/perfil');
       } else {
-        const { message } = await response.json();
+        const { message } = (await response.json()) as AuthResponse;
         setErro(message || 'Erro ao autenticar.');
       }
     } catch (error) {

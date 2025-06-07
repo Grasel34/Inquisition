@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { PerfilResponse } from '../types/api';
 
-const ProtectedRoute = ({ element }) => {
-  const [authorized, setAuthorized] = useState(null);
+const ProtectedRoute = ({ element }: { element: JSX.Element }) => {
+  const [authorized, setAuthorized] = useState<boolean | null>(null);
 
   useEffect(() => {
     const verify = async () => {
@@ -15,7 +16,12 @@ const ProtectedRoute = ({ element }) => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/perfil`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setAuthorized(res.ok);
+        if (res.ok) {
+          await res.json() as PerfilResponse;
+          setAuthorized(true);
+        } else {
+          setAuthorized(false);
+        }
       } catch {
         setAuthorized(false);
       }

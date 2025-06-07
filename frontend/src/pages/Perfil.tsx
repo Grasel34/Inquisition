@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { PerfilResponse, User } from '../types/api';
 
 const Perfil = () => {
-  const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [editando, setEditando] = useState(false);
-  const [mensagem, setMensagem] = useState('');
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [nome, setNome] = useState<string>('');
+  const [telefone, setTelefone] = useState<string>('');
+  const [editando, setEditando] = useState<boolean>(false);
+  const [mensagem, setMensagem] = useState<string>('');
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const Perfil = () => {
         });
 
         if (res.ok) {
-          const data = await res.json();
+          const data: PerfilResponse = await res.json();
           setUser(data.user);
           setNome(data.user.nome || '');
           setTelefone(data.user.telefone || '');
@@ -58,6 +59,8 @@ const Perfil = () => {
       });
 
       if (res.ok) {
+        const { user: updated } = (await res.json()) as PerfilResponse;
+        setUser(updated);
         setMensagem('Perfil atualizado com sucesso!');
         setEditando(false);
       } else {

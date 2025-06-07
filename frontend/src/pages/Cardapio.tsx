@@ -16,9 +16,14 @@ import VodkasIcon from '../assets/Cardapio/Vodkas.svg';
 import WhiskysIcon from '../assets/Cardapio/Whiskys.svg';
 
 // Contexto
-import { useComanda } from '../pages/ComandaContext';
+import { useComanda, Item } from '../pages/ComandaContext';
 
-const categories = [
+interface Category {
+  name: string;
+  icon: string;
+}
+
+const categories: Category[] = [
   { name: "Drinks", icon: DrinksIcon },
   { name: "Kit's", icon: KitsIcon },
   { name: "S/ Álcool", icon: SalcoolIcon },
@@ -26,7 +31,7 @@ const categories = [
   { name: "Whiskys", icon: WhiskysIcon }
 ];
 
-const products = [
+const products: Item[] = [
   { name: "Caipirinha", image: CaipiraImg, price: 119, category: "Drinks" },
   { name: "Jack Daniel", image: JackDanielImg, price: 119, category: "Whiskys" },
   { name: "Kit Natasha", image: KitNatashaImg, price: 119, category: "Kit's" },
@@ -36,26 +41,26 @@ const products = [
 ];
 
 const Cardapio = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [toastVisible, setToastVisible] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
   const { adicionarItem } = useComanda();
 
-  const formatPrice = (value) =>
+  const formatPrice = (value: number) =>
     new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(value);
 
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     setToastMessage(message);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2500);
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter((product: Item) => {
     const matchesCategory = !selectedCategory || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
